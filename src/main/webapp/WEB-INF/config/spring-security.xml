@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- Authorization  -->
+	<beans:alias name="filterChainProxy" alias="springSecurityFilterChain" />
+	
+	<beans:bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
+		<filter-chain-map path-type="ant">
+			<!-- bye pass security filter for static resources -->
+			<filter-chain pattern="/resources/**" filters="none" />
+
+			<!-- for other request pattern -->
+			<filter-chain pattern="/login*" filters="concurrencyFilter, securityContextFilter, logoutFilter, 
+				authenticationFilter, anonymousAuthFilter, exceptionTranslationFilter, filterSecurityInterceptor, authoritiesPopulatorFilter" />
+
+			<!-- for other request pattern -->
+			<filter-chain pattern="/welcome*" filters="concurrencyFilter, securityContextFilter, logoutFilter, 
+				authenticationFilter, anonymousAuthFilter, exceptionTranslationFilter, filterSecurityInterceptor, authoritiesPopulatorFilter" />
+
+			<!-- for other request pattern -->
+			<filter-chain pattern="/**" filters="concurrencyFilter, securityContextFilter, logoutFilter, 
+				authenticationFilter, anonymousAuthFilter, exceptionTranslationFilter, filterSecurityInterceptor" />
+		</filter-chain-map>
+	</beans:bean>
+
+	<!-- Spring Security Filter Definitions -->
+	<beans:bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+  		<beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+  		<beans:constructor-arg name="expiredUrl" value="/" />
+	</beans:bean>
+	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+	<beans:bean id="securityContextFilter"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+		<beans:property name="securityContextRepository" ref="securityContextRepository" />
+	</beans:bean>
+
+	<!-- securityContextPersistentFilter:: Filter to store the Authentication object in the HTTP Session -->
+	<beans:bean id="securityContextPersistentFilter"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+		<beans:property name="securityContextRepository" ref="securityContextRepository" />
+	</beans:bean>
+	<beans:bean id="securityContextRepository"
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
+
+	<!-- Create new session for authenticated user (defence against session fixation attacks) -->
+	<beans:bean id="sessionAuthenticationStrategy"
+		class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+
+	<!-- LogOut Filter::: The LogoutFilter is in charge of logging out the current 
+		user and invalidating the security context. The task of invalidating the 
+		HTTP session is again delegated to another actor, the SecurityContextLogoutHandler. -->
+	<beans:bean id="logoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<beans:constructor-arg value="/logoutSuccess" />
+		<beans:constructor-arg>
+			<beans:list>
+				<beans:bean
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+			</beans:list>
+		</beans:constructor-arg>
+		<beans:property name="filterProcessesUrl" value="/logout" />
+	</beans:bean>
+
+	<!-- It acts like a router and delegates all sub-tasks of authentication 
+		to other actors. The AuthenticationProcessingFilter collaborates with the 
+		following interfaces: 
+		1. AuthenticationManager: responsible for the authentication of the user with provided credentials 
+		2. AuthenticationSuccessHandler: responsible for the processing if authentication is successfull 
+		3. AuthenticationFailureHandler: responsible for the processing if authentication is not successfull -->
+	<beans:bean id="authenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="usernameParameter" value="j_username" />
+		<beans:property name="passwordParameter" value="j_password" />
+		<beans:property name="filterProcessesUrl" value="/login" />
+		<beans:property name="authenticationSuccessHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+				<beans:property name="defaultTargetUrl" value="/welcome" />
+				<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
+			</beans:bean>
+		</beans:property>
+		<beans:property name="authenticationFailureHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+				<!-- <beans:property name="defaultFailureUrl" value="/login?error" />  
+					forwarding to /login?error is not printing error message in LoginController or login.jsp -->
+				<beans:property name="defaultFailureUrl" value="/" />
+				<beans:property name="useForward" value="true" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<!-- Authentication Manager -->
+	<beans:bean id="authenticationManager"
+		class="org.springframework.security.authentication.ProviderManager">
+		<beans:property name="providers">
+			<beans:list>
+				<beans:ref bean="anonymousAuthenticationProvider" />
+				<beans:ref bean="ldapAuthProvider" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="ldapAuthProvider"
+		class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+		<beans:constructor-arg>
+			<beans:bean
+				class="org.springframework.security.ldap.authentication.BindAuthenticator">
+				<beans:constructor-arg ref="contextSource" />
+				<beans:property name="userSearch" ref="userSearch" />
+			</beans:bean>
+		</beans:constructor-arg>
+	</beans:bean>
+	<beans:bean id="anonymousAuthenticationProvider"
+    	class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+  		<beans:property name="key" value="foobar" />
+	</beans:bean>
+
+	<beans:bean id="contextSource"
+		class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+		<beans:constructor-arg value="ldap://springframework.org:389/" />
+		<beans:property name="userDn"
+			value="cn=manager,dc=springframework,dc=org" />
+		<beans:property name="password" value="ldapPassword" />
+		<beans:property name="pooled" value="false" />
+	</beans:bean>
+	<beans:bean id="userSearch"
+		class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+		<!-- searchBase, searchFilter, contextSource -->
+		<beans:constructor-arg index="0"
+			value="ou=groups,dc=springframework,dc=org" />
+		<beans:constructor-arg index="1" value="uid={0}" />
+		<beans:constructor-arg index="2" ref="contextSource" />
+	</beans:bean>
+
+
+	<!-- The AnonymousFilter job is to grant an anonymous role to the user. 
+		By default if there is no token in the security context, this filter will 
+		create one with anonymous attribute (defined via the userAttribute parameter) 
+		and the key value. -->
+	<beans:bean id="anonymousAuthFilter"
+		class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+		<beans:property name="key" value="foobar" />
+		<beans:property name="userAttribute" value="anonymousUser,IS_AUTHENTICATED_ANONYMOUSLY" />
+	</beans:bean>
+
+	<!-- Filter to redirect to login page -->
+	<beans:bean id="exceptionTranslationFilter"
+		class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+		<beans:property name="accessDeniedHandler" ref="accessDeniedHandler" />
+	</beans:bean>
+	<beans:bean id="authenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/WEB-INF/jsp/login.jsp" />
+		<beans:property name="useForward" value="true" />
+		<beans:property name="forceHttps" value="false" />
+	</beans:bean>
+	<beans:bean id="accessDeniedHandler"
+		class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<beans:property name="errorPage" value="/accessDenied" />
+	</beans:bean>
+
+	<!-- Filter for role checking -->
+	<beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="accessDecisionManager" ref="httpRequestAccessDecisionManager" />
+		<beans:property name="securityMetadataSource">
+			<filter-security-metadata-source lowercase-comparisons="true" use-expressions="true" >
+				<intercept-url pattern="/resources/**" access="permitAll" />
+				<intercept-url pattern="/pages/Settings/**" access="hasRole('SETTINGS')" />
+				<intercept-url pattern="/pages/Home/*" access="hasRole('HOME')" />
+				<intercept-url pattern="/pages/Admin/**" access="hasRole('ADMINISTRATOR')" />
+				<intercept-url pattern="/servlet/Download" access="hasAnyRole('DOWNLOAD','PREMIUM_ACCOUNT')" />
+				<intercept-url pattern="/emp/*" access="permitAll" />
+
+				<intercept-url pattern="/" access="isAnonymous()" />
+				<intercept-url pattern="/accessDenied" access="isFullyAuthenticated()" />
+				<intercept-url pattern="/welcome" access="isFullyAuthenticated()" />
+				<!-- <intercept-url pattern="/**" access="isAuthenticated()" /> 
+						This config is restricting to request the /logoutSuccess url, so commenting it. -->
+			</filter-security-metadata-source>
+		</beans:property>
+	</beans:bean>
+	<beans:bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<beans:property name="allowIfAllAbstainDecisions" value="false" />
+		<beans:property name="decisionVoters">
+			<beans:list>
+				<beans:ref bean="webExpressionVoter" />
+				<!-- <ref bean="authenticatedVoter" /> -->
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	<beans:bean id="webExpressionVoter"
+		class="org.springframework.security.web.access.expression.WebExpressionVoter">
+		<beans:property name="expressionHandler" ref="webSecurityExpressionHandler" />
+		<!-- remove above [expressionHandler] property if custom role hierarchy not needed -->
+	</beans:bean>
+	<!-- Web Expression Handler to use custom defined role hierarchy -->
+	<beans:bean id="webSecurityExpressionHandler"
+		class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+		<beans:property name="roleHierarchy" ref="roleHierarchy" />
+	</beans:bean>
+	<!-- Custom Role Hierarchy Definition -->
+	<beans:bean id="roleHierarchy"
+        class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+    	<beans:property name="hierarchy">
+        	<beans:value>
+            	SUPER_ADMIN > REPORT_ADMIN
+        	</beans:value>
+    	</beans:property>
+	</beans:bean>
+
+	<beans:bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter" />
+
+	<!-- Last filter in chain to validate authentication and role population -->
+		<!-- Populates Authorities based on role selection -->
+	<beans:bean id="authoritiesPopulatorFilter" 
+		class="edu.springweb.web.security.AuthoritiesPopulatorFilter">
+		<beans:property name="roleOperationService" ref="roleOperationAssignmentService" />
+	</beans:bean>
+
+
+	<!-- Enable method level security -->
+	<global-method-security pre-post-annotations="enabled" />
+</beans:beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!-- Section for Base definition -->
+	<definition name="base.definition" template="/WEB-INF/tiles/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/menu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+	</definition>
+
+	<!-- Welcome Tiles Definition -->
+	<definition name="welcomeHome" extends="base.definition">
+		<put-attribute name="title" value="ApplicationName Welcome" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/welcomeHome.jsp" type="template" />
+	</definition>
+
+	<!-- Employee Home Tiles Definition -->
+	<definition name="empHome" extends="base.definition">
+		<put-attribute name="title" value="ApplicationName Welcome" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emp/empHome.jsp" type="template" />
+	</definition>
+
+	<!-- Employee Edit Tiles Definition -->
+	<definition name="editEmp" extends="base.definition">
+		<put-attribute name="title" value="ApplicationName Welcome" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emp/editEmp.jsp" type="template" />
+	</definition>
+
+	<!-- Employee View Tiles Definition -->
+	<definition name="viewEmp" extends="base.definition">
+		<put-attribute name="title" value="ApplicationName Welcome" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/emp/viewEmp.jsp" type="template" />
+	</definition>
+
+</tiles-definitions>

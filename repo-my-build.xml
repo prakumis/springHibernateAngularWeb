@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<project name="ENUM Conversion" default="jar" basedir=".">
+	<property file="${basedir}/build.properties" />
+	<property name="src-main.dir" value="src" />
+	<property name="build.dir" value="target" />
+	<property name="tempdir" value="${build.dir}/temp" />
+	<property name="build.src-main-classes.dir" value="${build.dir}/classes" />
+	<property name="build.lib.dir" value="${build.dir}/lib" />
+	<property name="meta.dir" value="META-INF" />
+	<property name="jar.name" value="${lte-datamodel-parser-jar}" />
+
+	<fileset id="lib.3pp" dir="${3pplib.dir}" description="Third party JAR files needed for compilation">
+		<include name="${log4j}" />
+		<include name="${cc-engine}" />
+	</fileset>
+
+	<path id="java.compile.classpath">
+		<fileset refid="lib.3pp" />
+	</path>
+
+	<target name="init">
+		<echo message="Creating build directories" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.src-main-classes.dir}" />
+		<mkdir dir="${build.lib.dir}" />
+		<echo message="Initialization complete" />
+	</target>
+
+	<target name="copyResources">
+		<copy todir="${build.lib.dir}">
+			<fileset dir="${3pplib.dir}">
+				<include name="**/log4j-1.2.15.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${build.lib.dir}">
+			<fileset dir="${3pplib.dir}">
+				<include name="**/ccengine.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile" depends="init,copyResources">
+		<javac destdir="${build.src-main-classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includeantruntime="false">
+			<src path="${src-main.dir}" />
+			<classpath refid="java.compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="clean,compile">
+		<echo message="Creating jar file" />
+		<jar destfile="${build.dir}/${jar.name}" basedir="${build.src-main-classes.dir}" >
+			<metainf dir="${meta.dir}"/>
+			<fileset dir=".">
+			    <include name="lib/*.jar"/>
+			  </fileset>
+		</jar>
+		<delete dir="${build.lib.dir}" />
+	</target>
+
+	<target name="clean">
+		<echo message="Cleaning build dir" />
+		<delete dir="${build.dir}" />
+	</target>
+</project>

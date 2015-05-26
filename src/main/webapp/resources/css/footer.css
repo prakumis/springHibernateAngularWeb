@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+/* HTML5 display-role reset for older browsers */
+
+#header, #container_box, #footer{
+	min-width: 1000px;
+	width:100%;
+	display:block;
+	clear:both;
+	background:#fff;
+	font:normal 12px Arial, Helvetica, sans-serif;
+	color:#333333;
+	margin:0 auto;
+}
+
+#footer{
+	background:#eee;
+}
+
+#footer #logo {
+     border: medium none;
+     float: left;
+     margin-left: 30px;
+     margin-top: 15px;
+}
+
+#footer .inner_900{
+	/*width:900px; 22-05-2012*/
+	clear:both;
+	display: inline-block;
+	margin:0 auto;
+	margin-left: 30px;
+	overflow:hidden;
+	padding: 26px 0;
+	width:1180px;
+}
+#footer ol, #footer ul{
+   list-style-type: circle;
+	margin:0;
+	padding:0;
+}
+#footer .inner_900 p {
+	background:none;
+	margin:0;
+	padding:10px 0 10px 0;
+	text-align:left;
+	font-size:11px;
+	line-height: 18px;
+	clear:both;
+	display:none;
+}
+#footer .inner_900 span.field-content {
+	font-size:11px;
+	white-space:nowrap;
+display: none;
+}
+#footer .inner_900 p a {
+	color: #0066BB;
+}
+
+.color_line {
+    background: url("../images/color_line.jpg") repeat-x scroll 0 0 transparent;
+    clear: both;
+    display: block;
+    height: 3px;
+    margin: 0 auto;
+    min-width: 1000px;
+    width: 100%;
+}
+
+
+
+#container1 .node,  #container1 .profile, #container1 #user-login{
+	/*width:900px; 22-05-2012*/
+	margin:0 auto; 
+	/*overflow:hidden;*/
+	background:#fff;
+	/*padding:10px 10px 23px;
+	border:1px solid #EEE;*/
+}
+.inner_wrap_content_blog .node {
+	/*width:900px;*/
+	/*width:902px; 22-05-2012*/
+	margin:0 auto; 
+	overflow:hidden;
+	background:#fff;
+	padding:0px;
+	border:1px solid #EEE;
+	width:1180px;
+}
+/*#container1 .node-page, .page-user .profile {width:875px!important;}*/
+
+#container1 #node-363, #container1 #node-499{
+	background:#f8f8f8 !important;
+	padding:0 0 5px !important;
+	border:none !important;
+}	
+	
+#admin-menu ul a {
+    border-bottom: medium none;
+    border-right: 1px solid #323232;
+/*    color: #000 !important;  */
+    display: block;
+    font-weight: bold;
+    padding: 4px 8px;
+    text-align: left;
+    text-decoration: none;
+	font-size:11px;
+}
+
+.adminstyle .block{
+	height: auto;
+	width:auto;
+}
+
+
+
+.footer_logo{
+	float:left;
+	margin-right:34px;
+}
+#footer ul{
+	float:left;
+	width:12%;
+	list-style: none;
+}
+#footer ul.fast, #footer:first-child .menu {
+	float:left;
+	width:18%;
+}
+#footer li a{
+	color:#0066bb;
+	font-size:11px;
+	text-decoration: none;
+}
+#footer li a:hover{
+	color:#13175e;
+}
+#footer ul li ul{
+	width:100%;
+}
+/* --------------Footer CSS End-------------- */
+#footer #credit {
+	margin-top: 0px;
+	text-align: center;
+	font-size: 10pt;
+}
+
+#footer #creditDesign {
+	margin: 5px;
+	margin-left: 30px;
+}
+
+#footer #creditDesign a {
+	text-decoration: none;
+	color: #0066BB;
+}
+
+#footer span {
+	margin: 0px;
+}

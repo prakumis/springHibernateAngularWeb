@@ -1,0 +1,20 @@
+<!-- 
+<html>
+<body>
+<h2>Hello World!   <%=new java.util.Date() %></h2>
+</body>
+</html>
+========================================================
+ -->
+<!DOCTYPE html>
+<html>
+
+<frameset rows="10%, 90%">
+  <frame name="header" src="resources/html/header.jsp">
+  <frameset cols="25%,75%">
+    <frame name="menu" src="resources/html/menu.jsp">
+    <frame name="body" src="resources/html/body.jsp">
+  </frameset>
+</frameset>
+
+</html>

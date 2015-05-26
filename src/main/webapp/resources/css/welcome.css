@@ -1,0 +1,62 @@
+#welcomeContainer {
+	position: relative;
+	background-color: transparent;
+	width: 1150px;
+}
+
+#welcomeContent {
+	margin-top: 0px;
+	margin-left: 250px;
+/* 	text-align: center; */
+	display: inline-block;
+	font-size: 12pt;
+	background-color: transparent;
+}
+
+#welcomeContent h1 {
+	text-align: center;
+	font-size: 16pt;
+	margin-top: 0px;
+}
+
+#welcomeContent h2 {
+	text-align: center;
+	font-size: 12pt;
+	/* text-decoration: blink;	 */
+}
+
+#leadDiv, #auditDiv, #auditeeDiv, #masterDiv {
+	display: none;
+}
+
+span {
+	margin: 5px;
+}
+
+#welcomeContent ul {
+	margin: 30px auto 30px auto;
+}
+
+#welcomeContent p {
+	margin: 10px;
+}
+
+
+#welcomeContent #text {
+	background-color: transparent;
+}
+
+#guide {
+	display: run-in;
+	text-align: left;
+	margin-top: 120px;
+	font-size: 12pt;
+}
+
+#manLinks {
+	text-decoration: none;
+	text-align: left;
+	margin-right: 90px;
+	font-size: 12pt;
+/* 	text-color: #B175F6; */
+}

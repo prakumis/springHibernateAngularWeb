@@ -1,0 +1,254 @@
+@charset "utf-8";
+/* CSS Document */
+.login {
+	background: url(../images/login-bg.jpg);
+	width: 792px;
+	height: 319px;
+}
+
+.nav {
+	float: right;
+}
+
+.nav ul {
+	margin-top: 20px;
+	padding: 0px;
+	line-height: 60px;
+	margin-right: 20px;
+}
+
+.nav ul li {
+	margin: 0px;
+	padding: 0 20px 0 20px;
+	list-style-type: none;
+	float: left;
+	border-right: 0px dashed #efefef;
+}
+
+.nav ul li a {
+	color: #002561;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.nav ul li a:hover {
+	text-decoration: none;
+}
+
+.nav ul li ul {
+	background: #f3f3f3;
+	height: auto;
+}
+
+.nav ul li ul li a {
+	background: transparent !important;
+	padding-left: 10px;
+	text-transform: none !important;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.nav ul li ul li a:hover {
+	font-weight: normal;
+	color: #000;
+}
+
+.breadcrum ul {
+	margin: 20px 0 0 20px;
+	padding: 0px;
+}
+
+.breadcrum ul li {
+	float: left;
+	padding: 0 3px 0 3px;
+	list-style-type: none;
+}
+
+.breadcrum ul li a {
+	color: #000;
+	text-decoration: none;
+}
+
+.breadcrum ul li a.current {
+	font-weight: bold;
+}
+
+.login-container {
+	position: relative;
+	padding-top: 20%;
+}
+
+ul.login-txt {
+	list-style-type: none;
+	position: absolute;
+	top: 40%;
+	left: 5%;
+	top: 33%;
+}
+
+ul.login-txt  li {
+	line-height: 40px;
+	display: block;
+	clear: both;
+}
+
+.errormsg {
+	color: red
+}
+
+.successmsg {
+	color: #336600;
+}
+
+.c {
+	clear: both;
+}
+
+/************ tabs  ******************/
+div#container-tab p {
+	margin: 0px;
+	padding: 0px;
+}
+
+div#container-tab {
+	margin: 0px auto 0;
+	width: 100%;
+}
+
+ul.tabNav {
+	float: left;
+	list-style: none;
+	width: 100%;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	font-size: 12px;
+/* 	margin-left: 20px; */
+}
+
+ul.tabNav li {
+	float: left;
+	margin: 0 1px 0 1px;
+	padding: 6px 0 0;
+	list-style-type: none;
+}
+
+ul.tabNav li.current {
+	padding-top: 0;
+}
+
+ul.tabNav a {
+	background: #448adf;
+	border: 1px solid #215899;
+	border-width: 1px 1px 0;
+	display: block;
+	padding: 4px 6px 5px 6px;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+}
+
+ul.tabNav li.current a {
+	background: #104f9e;
+	border: none;
+	padding: 8px;
+	color: #fff;
+}
+
+div.tabContainer {
+	clear: both;
+/* 	float: left; */
+	width: 1000px;
+/* 	margin-left: 20px; */
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+
+div.tab ul {
+	width: 350px;
+	float: left;
+	border: 0px solid;
+}
+
+div.tab h2 {
+	font-size: 14px;
+}
+
+div.tab p {
+	font-size: 16px;
+	font-style: italic;
+	font-weight: normal;
+/* 	padding-top: 30px; */
+	line-height: 22px;
+/* 	margin-top: 25px !important; */
+}
+
+div.tab p strong {
+	color: #0298cd;
+}
+
+div.tabContainer ul li {
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 22px;
+	list-style-type: none;
+}
+
+div.tabContainer div.tab {
+/* 	border: 1px solid #e1e1e1; */
+	color: #000;
+	display: none;
+/* 	padding: 10px; */
+/* 	height: 150px; */
+/* 	width: 100%; */
+/* 	min-height: 150px; */
+}
+
+div.tabContainer div.current {
+	display: block;
+}
+
+div.tab p:last-child {
+	margin-bottom: 0;
+}
+
+h2 {
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 20px;
+}
+
+table#grid {
+	width: 97%;
+	border-collapse: collapse;
+}
+/* Zebra striping */
+table#grid tr:nth-of-type(odd) {
+	background: #eee;
+}
+
+table#grid th {
+	background: #d1d1d3;
+	color: #000;
+	font-weight: bold;
+}
+
+table#grid th {
+	padding: 6px;
+	border: 1px solid #ccc;
+	text-align: left;
+}
+
+table#grid td {
+	padding: 6px;
+	border: 1px solid #ccc;
+}
+
+
+#successMessage {
+	color: green;
+}
+#errorMessages {
+	color: red;
+}
