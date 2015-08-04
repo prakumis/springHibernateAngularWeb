@@ -1,0 +1,25 @@
+<!-- Tab panes + Panel body -->
+<div class="panel-body tab-content">
+	<div class="tab-pane active" id="home">
+		<table st-table="displayedCollection" st-safe-src="configs" class="table table-striped">
+			<thead>
+				<tr>
+					<th st-sort="row.name">Name</th>
+					<th st-sort="type">Type</th>
+					<th st-sort="active">Active</th>
+					<th st-sort="executionNode">Execution Node</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in displayedCollection">
+					<td><a href="#/mod1/{{row._id}}">{{row.name}}</a></td>
+					<td>{{row.type}}</td>
+					<td>{{row.active}}</td>
+					<td>{{row.executionNode}}</td>
+					<td><span class="glyphicon glyphicon-remove" ng-click="deleteConfig(row._id)"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -63,3 +63,29 @@ Method level security:  http://howtodoinjava.com/2014/02/15/xml-config-based-met
 ---------------------------------------------------------------------------------------------------
 URL: http://www.unixmen.com/openldap-installation-configuration-ubuntu-12-1013-0413-10-debian-67-2/
 ---------------------------------------------------------------------------------------------------
+
+
+###################################################################################################
+------------------ JSON data from REST controller to AngularJS Issue ----------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+http://stackoverflow.com/questions/24994440/no-serializer-found-for-class-org-hibernate-proxy-pojo-javassist-javassist
+---------------------------------------------------------------------------------------------------
+
+
+###################################################################################################
+------------------ CORS Issue ---------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Error Message:: Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at 
+http://localhost:9080/springHibernateAngularWeb/json/update. This can be fixed by moving the resource to the same domain or enabling CORS.
+
+Solution:: https://htet101.wordpress.com/2014/01/22/cors-with-angularjs-and-spring-rest/
+---------------------------------------------------------------------------------------------------
+Error 2: Above solution works well when there is no header in the Controller method annotation as in case of GET, DELETE.
+		But when there is some header annotation added in controller method (@RequestMapping(value = "/update", method = RequestMethod.POST, headers = {"Content-Type=application/json"})), 
+		above solution fails.
+Solution:: http://stackoverflow.com/questions/8163703/cross-domain-ajax-doesnt-send-x-requested-with-header
+		SimpleCORSFilter:: 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type");
+		http://stackoverflow.com/questions/28855198/post-blocked-even-when-cors-is-enabled
+-----------------------------------------------------------------------------------------------------------
+		
+

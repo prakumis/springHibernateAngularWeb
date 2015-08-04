@@ -16,9 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.springweb.beans.LoginStatus;
 import edu.springweb.entity.Role;
 import edu.springweb.entity.User;
 import edu.springweb.exception.ServiceException;
@@ -52,7 +54,8 @@ public class LoginController {
 
 	// Spring Security see this :
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+	@ResponseBody
+	public LoginStatus login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
 
 		// request.getSession().invalidate();
@@ -66,10 +69,17 @@ public class LoginController {
 		if (logout != null) {
 			model.addObject("message", "You've been logged out successfully.");
 		}
-		model.setViewName("login");
+		model.setViewName("welcomeHome");
 
-		return model;
-
+		/**
+		 * return the model containing logical view/jsp name in case it is not returning json as 
+		 * RESTFul service. when it is used as RESTFul service, return successMessage in json format.
+			return model;
+		 */
+		LoginStatus loginStatus = new LoginStatus();
+		loginStatus.setName("AngularClient");
+		loginStatus.setStatus("SUCCESS");
+		return loginStatus;
 	}
 
 	@RequestMapping("/accessDenied")
@@ -140,21 +150,6 @@ public class LoginController {
 			loggedInUser = getUserService().findActiveUser(loggedInUser);
 			//loggedInUser.setRoleAndATAssignments(null);
 			//loggedInUser.setRecordInfo(null);
-			return loggedInUser;
-		} catch (ServiceException ex) {
-			logger.warn("Invalid User : " + loggedInUser.getUserName());
-			return null;
-		}
-	}
-
-	private User fetchUser_OLD(Principal principal) {
-
-		User loggedInUser = new User();
-		String name = principal.getName(); // get logged in username
-		loggedInUser.setUserName(name);
-		try {
-			// Check if user exists in the system and is 'ACTIVE'
-			loggedInUser = getUserService().findActiveUser(loggedInUser);
 			return loggedInUser;
 		} catch (ServiceException ex) {
 			logger.warn("Invalid User : " + loggedInUser.getUserName());

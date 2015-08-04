@@ -3,7 +3,6 @@ package edu.springweb.entity;
 import java.io.Serializable;
 
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;

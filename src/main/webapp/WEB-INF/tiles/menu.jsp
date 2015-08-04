@@ -15,7 +15,7 @@
 <ul id="nav">
  	<li><a href="${pageContext.request.contextPath}/emp/">List Employees (MVC/Tiles/JSP)</a></li>
  	<li><a href="${pageContext.request.contextPath}/json/something/">List category (REST/JSON)</a></li>
- 	<li><a href="${pageContext.request.contextPath}/json/getAllEmp/">List category (REST/JSON)</a></li>
+ 	<li><a href="${pageContext.request.contextPath}/json/getAllEmp/" target="_new">List category (REST/JSON)</a></li>
  	<li><a href="${pageContext.request.contextPath}/json/view/1">View Emp (REST/JSON)</a></li>
 </ul>
 <p class="menuSection">Basic Operations</p>

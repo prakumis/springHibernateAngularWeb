@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Employee Management System</title>
+	<link href="resources/stylesheets/bootstrap.min.css" rel="stylesheet">
+  	<script type="text/javascript" src="resources/javascripts/angular.js"></script>
+  	<script type="text/javascript" src="resources/javascripts/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="resources/javascripts/my-angular-app.js"></script>
+	<script type="text/javascript" src="resources/javascripts/ui-bootstrap-tpls-0.13.0.js"></script>
+
+<style>
+.run-job {	color: #0000FF;	font-size: 20px;	cursor: hand;	cursor: pointer;}
+.icon-green {	color: #088A08;}
+.icon-delete {	color: #ff0000;	cursor: hand;	cursor: pointer;}
+.ace_editor {	height: 500px;	width: 100%;}
+</style>
+<script>
+  //var socket = io.connect('http://localhost:4000');
+</script>
+<style>
+	body {
+	  padding-top: 70px;
+	  padding-bottom: 30px;
+	}
+
+	</style>	
+</head>
+<body ng-app="flapperNews">
+
+  	<div class="row">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#/home">Sonada Scheduler</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse" >
+					<ul class="nav navbar-nav">
+						<li ng-class="{active:isTopNavActive('/home')}"><a href="#/home">Home</a></li>
+						<li ng-class="{active:isTopNavActive('/mod1')}"><a href="#/mod1">Module 1</a></li>
+						<li ng-class="{active:isTopNavActive('/emp')}"><a href="#/emp">Employees</a></li>
+						<li ng-class="{active:isTopNavActive('/login')}"><a href="#/login">Login</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<ui-view></ui-view>
+		</div>
+  	</div></body>
+</html>
